@@ -36,14 +36,11 @@
 
   type CardVariants = VariantProps<typeof card>;
   interface Props {
-    open?: boolean;
     children?: Snippet;
     class?: string;
   }
 
-  // eslint-disable-next-line prefer-const
-  let {
-    open = $bindable(false),
+  const {
     color,
     variant,
     image,
@@ -54,6 +51,4 @@
   const classes = $derived(twMerge(card({ color, variant, image, size, className })));
 </script>
 
-<div class={classes}>
-  {@render children?.()}
-</div>
+<div class={classes}>{@render children?.()}</div>
