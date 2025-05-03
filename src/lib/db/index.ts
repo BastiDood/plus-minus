@@ -2,7 +2,7 @@ import { Dexie, type EntityTable } from 'dexie';
 
 export interface Entry {
   id: number;
-  name: number;
+  name: string;
   amount: number;
   createdAt: Date;
 }
