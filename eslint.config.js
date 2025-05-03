@@ -131,7 +131,6 @@ export default ts.config(
       'require-atomic-updates': 'error',
       'require-await': 'error',
       'require-unicode-regexp': 'error',
-      'sort-imports': ['error', { allowSeparatedGroups: true }],
       'symbol-description': 'error',
       yoda: ['warn', 'never', { exceptRange: true }],
     },
