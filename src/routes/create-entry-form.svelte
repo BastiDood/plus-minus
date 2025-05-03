@@ -20,11 +20,8 @@
   let open = $state(false);
 
   async function addEntry(name: string, amount: number) {
-    try {
-      await db.entry.add({ name, amount, createdAt: new Date() });
-    } finally {
-      open = false;
-    }
+    await db.entry.add({ name, amount, createdAt: new Date() });
+    open = false;
   }
 </script>
 
