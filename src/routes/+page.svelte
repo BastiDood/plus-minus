@@ -4,7 +4,7 @@
 
   import Table from '$lib/ui/table.svelte';
 
-  import CreateEntryForm from './create-entry-form.svelte';
+  import CreateEntryForm from '$lib/feature/create-entry/index.svelte';
 
   const entries = liveQuery(async () => {
     const db = await ready;

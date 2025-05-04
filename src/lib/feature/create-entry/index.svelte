@@ -1,6 +1,6 @@
 <script lang="ts">
   import { decode } from 'decode-formdata';
-  import { finite, nonEmpty, number, object, parse, pipe, string } from 'valibot';
+  import { parse } from 'valibot';
 
   import { ready } from '$lib/db';
 
@@ -12,10 +12,7 @@
   import Dialog from '$lib/ui/dialog.svelte';
   import Input from '$lib/ui/input.svelte';
 
-  const schema = object({
-    name: pipe(string(), nonEmpty()),
-    amount: pipe(number(), finite()),
-  });
+  import { CreateEntry } from './schema';
 
   let open = $state(false);
 
@@ -46,8 +43,8 @@
           if (event.currentTarget.reportValidity()) {
             const data = new FormData(event.currentTarget);
             const payload = decode(data, { numbers: ['amount'] });
-            const { name, amount } = parse(schema, payload);
-            void addEntry(name, amount);
+            const { name, amount } = parse(CreateEntry, payload);
+            addEntry(name, amount);
           }
         }}
       >
