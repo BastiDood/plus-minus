@@ -2,7 +2,7 @@
   import { decode } from 'decode-formdata';
   import { finite, nonEmpty, number, object, parse, pipe, string } from 'valibot';
 
-  import { db } from '$lib/db';
+  import { ready } from '$lib/db';
 
   import Button from '$lib/ui/button.svelte';
   import Card from '$lib/ui/card/index.svelte';
@@ -20,14 +20,21 @@
   let open = $state(false);
 
   async function addEntry(name: string, amount: number) {
+    const db = await ready;
     await db.entry.add({ name, amount, createdAt: new Date() });
     open = false;
   }
+
+  interface Props {
+    disabled?: boolean;
+  }
+
+  const { disabled }: Props = $props();
 </script>
 
 <Dialog bind:open>
   {#snippet trigger(props)}
-    <Button type="button" color="primary" {...props}>Create</Button>
+    <Button type="button" color="primary" {disabled} {...props}>Create</Button>
   {/snippet}
   {#snippet content()}
     <Card color="neutral">

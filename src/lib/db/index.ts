@@ -11,8 +11,10 @@ export interface Database extends Dexie {
   entry: EntityTable<Entry, 'id'>;
 }
 
-// Trust me, bro...
-export const db = new Dexie('plus-minus') as Database;
-db.version(1).stores({
+const dexie = new Dexie('plus-minus', { autoOpen: false });
+dexie.version(1).stores({
   entry: '++id,amount,createdAt',
 });
+
+// Trust me, bro...
+export const ready = dexie.open() as unknown as Promise<Database>;
