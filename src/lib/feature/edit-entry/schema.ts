@@ -14,10 +14,12 @@ export const EditEntry = object({
   id: pipe(number(), safeInteger()),
   name: pipe(
     string(),
+    // eslint-disable-next-line no-undefined
     transform(value => (value.length === 0 ? undefined : value)),
   ),
   amount: pipe(
     nullable(pipe(number(), finite())),
+    // eslint-disable-next-line no-undefined
     transform(value => value ?? undefined),
   ),
 });
