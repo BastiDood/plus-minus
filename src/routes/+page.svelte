@@ -5,6 +5,7 @@
   import Table from '$lib/ui/table.svelte';
 
   import CreateEntry from '$lib/feature/create-entry/index.svelte';
+  import DeleteEntry from '$lib/feature/delete-entry/index.svelte';
   import EditEntry from '$lib/feature/edit-entry/index.svelte';
 
   const entries = liveQuery(async () => {
@@ -28,6 +29,7 @@
     {@render cell()}
     {@render cell()}
     {@render cell()}
+    {@render cell()}
   </tr>
 {/snippet}
 
@@ -46,6 +48,7 @@
           <th>Amount</th>
           <th>Creation Time</th>
           <th>Edit</th>
+          <th>Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -62,6 +65,7 @@
               <td>{amount}</td>
               <td>{createdAt.toLocaleString()}</td>
               <td><EditEntry {id} /></td>
+              <td><DeleteEntry {id} /></td>
             </tr>
           {/each}
         {/await}

@@ -32,11 +32,11 @@
 
 <Dialog bind:open>
   {#snippet trigger(props)}
-    <Button type="button" color="primary" size="sm" {disabled} {...props}>Edit</Button>
+    <Button type="button" color="secondary" size="sm" {disabled} {...props}>Edit</Button>
   {/snippet}
   {#snippet content()}
     <Card color="neutral">
-      <CardTitle><h2>Create Entity</h2></CardTitle>
+      <CardTitle><h2>Edit Entity</h2></CardTitle>
       <form
         onsubmit={event => {
           event.preventDefault();
@@ -44,8 +44,7 @@
           if (event.currentTarget.reportValidity()) {
             const data = new FormData(event.currentTarget);
             const payload = decode(data, { numbers: ['id', 'amount'] });
-            const query = parse(EditEntry, payload);
-            edit(query);
+            edit(parse(EditEntry, payload));
           }
         }}
       >
