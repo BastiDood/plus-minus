@@ -4,7 +4,8 @@
 
   import Table from '$lib/ui/table.svelte';
 
-  import CreateEntryForm from '$lib/feature/create-entry/index.svelte';
+  import CreateEntry from '$lib/feature/create-entry/index.svelte';
+  import EditEntry from '$lib/feature/edit-entry/index.svelte';
 
   const entries = liveQuery(async () => {
     const db = await ready;
@@ -26,14 +27,15 @@
     {@render cell()}
     {@render cell()}
     {@render cell()}
+    {@render cell()}
   </tr>
 {/snippet}
 
 <main class="space-y-4 p-4">
   {#await ready}
-    <CreateEntryForm disabled />
+    <CreateEntry disabled />
   {:then}
-    <CreateEntryForm />
+    <CreateEntry />
   {/await}
   <div class="overflow-x-auto">
     <Table>
@@ -43,6 +45,7 @@
           <th>Name</th>
           <th>Amount</th>
           <th>Creation Time</th>
+          <th>Edit</th>
         </tr>
       </thead>
       <tbody>
@@ -58,6 +61,7 @@
               <td>{name}</td>
               <td>{amount}</td>
               <td>{createdAt.toLocaleString()}</td>
+              <td><EditEntry {id} /></td>
             </tr>
           {/each}
         {/await}

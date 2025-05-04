@@ -12,26 +12,27 @@
   import Dialog from '$lib/ui/dialog.svelte';
   import Input from '$lib/ui/input.svelte';
 
-  import { CreateEntry } from './schema';
+  import { EditEntry } from './schema';
 
   let open = $state(false);
 
-  async function add({ name, amount }: CreateEntry) {
+  async function edit({ id, name, amount }: EditEntry) {
     const db = await ready;
-    await db.entry.add({ name, amount, createdAt: new Date() });
+    await db.entry.update(id, { name, amount });
     open = false;
   }
 
   interface Props {
+    id: number;
     disabled?: boolean;
   }
 
-  const { disabled }: Props = $props();
+  const { id, disabled }: Props = $props();
 </script>
 
 <Dialog bind:open>
   {#snippet trigger(props)}
-    <Button type="button" color="primary" {disabled} {...props}>Create</Button>
+    <Button type="button" color="primary" size="sm" {disabled} {...props}>Edit</Button>
   {/snippet}
   {#snippet content()}
     <Card color="neutral">
@@ -42,14 +43,16 @@
           event.stopPropagation();
           if (event.currentTarget.reportValidity()) {
             const data = new FormData(event.currentTarget);
-            const payload = decode(data, { numbers: ['amount'] });
-            add(parse(CreateEntry, payload));
+            const payload = decode(data, { numbers: ['id', 'amount'] });
+            const query = parse(EditEntry, payload);
+            edit(query);
           }
         }}
       >
         <CardBody>
-          <Input type="text" required name="name" />
-          <Input type="number" required step="0.01" name="amount" />
+          <input type="hidden" name="id" value={id} />
+          <Input type="text" name="name" />
+          <Input type="number" step="0.01" name="amount" />
         </CardBody>
         <CardActions class="ml-auto">
           <Button type="submit" color="success" class="w-fit">Submit</Button>
