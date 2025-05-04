@@ -48,8 +48,8 @@
         }}
       >
         <CardBody>
-          <Input type="text" required name="name" />
-          <Input type="number" required step="0.01" name="amount" />
+          <Input type="text" required placeholder="Name" name="name" />
+          <Input type="number" required step="0.01" placeholder="Amount" name="amount" />
         </CardBody>
         <CardActions class="ml-auto">
           <Button type="submit" color="success" class="w-fit">Submit</Button>

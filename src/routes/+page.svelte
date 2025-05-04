@@ -2,6 +2,7 @@
   import { ready } from '$lib/db';
   import { liveQuery } from '$lib/db/dexie';
 
+  import Keyboard from '$lib/ui/keyboard.svelte';
   import Table from '$lib/ui/table.svelte';
 
   import CreateEntry from '$lib/feature/create-entry/index.svelte';
@@ -11,6 +12,11 @@
   const entries = liveQuery(async () => {
     const db = await ready;
     return await db.entry.toArray();
+  });
+
+  const net = $derived.by(() => {
+    const rows = entries.current ?? [];
+    return rows.reduce((total, { amount }) => total + amount, 0);
   });
 </script>
 
@@ -34,11 +40,14 @@
 {/snippet}
 
 <main class="space-y-4 p-4">
-  {#await ready}
-    <CreateEntry disabled />
-  {:then}
-    <CreateEntry />
-  {/await}
+  <div class="space-x-2">
+    {#await ready}
+      <CreateEntry disabled />
+    {:then}
+      <CreateEntry />
+    {/await}
+    <Keyboard size="xl">{net}</Keyboard>
+  </div>
   <div class="overflow-x-auto">
     <Table>
       <thead>

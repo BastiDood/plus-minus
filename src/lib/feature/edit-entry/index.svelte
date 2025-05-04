@@ -50,8 +50,8 @@
       >
         <CardBody>
           <input type="hidden" name="id" value={id} />
-          <Input type="text" name="name" />
-          <Input type="number" step="0.01" name="amount" />
+          <Input type="text" placeholder="Name" name="name" />
+          <Input type="number" step="0.01" placeholder="Amount" name="amount" />
         </CardBody>
         <CardActions class="ml-auto">
           <Button type="submit" color="success" class="w-fit">Submit</Button>
